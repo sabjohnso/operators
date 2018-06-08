@@ -2,7 +2,8 @@
 configure_file( config.hpp.in config.hpp )
 
 install( FILES
-  config.hpp
+  ${CMAKE_CURRENT_BINARY_DIR}/config.hpp
+  comparable.hpp
   inequality.hpp
   import.hpp
   ops.hpp
