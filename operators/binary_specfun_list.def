@@ -1,0 +1,14 @@
+/**
+ * @brief A list of binary special functions
+ *
+ * @details This file contains a list of binary
+ * special functions that is intended to be
+ * used with X-Macros to generate repetative code
+ * for each special function.
+ */
+X( pow, power, Power, _ );
+X( atan2, arctangent2, ArcTangent2, _ );
+X( hypot, hypotenuse, Hypotenuse, _ );
+X( fdim, positive_difference, PositiveDifference, _ );
+X( fmin, minimum, Minimum, _ );
+X( fmax, maximum, Maximum, _ );

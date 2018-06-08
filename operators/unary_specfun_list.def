@@ -1,0 +1,29 @@
+/**
+ * @brief A list of unary special functionso
+ *
+ * @details This file contains a list of 
+ * unary special functions that is intended to be
+ * used with X-Macros to generate repetative code
+ * for each special function.
+ */
+X( cos, cosine, Cosine, _ );
+X( sin, sine, Sine, _ );
+X( tan, tangent, Tangent, _ );
+X( acos, arccosine, ArcCosine, _ );
+X( asin, arcsine, ArcSine, _ );
+X( atan, arctangent, ArcTangent, _ );
+X( cosh, hyperbolic_cosine, HyperbolicCosine, _ );
+X( sinh, hyperbolic_sine, HyperbolicSine, _ );
+X( tanh, hyperbolic_tangent, HyperbolicTangent, _ );
+X( acosh, area_hyperbolic_cosine, AreaHyperbolicCosine, _ );
+X( asinh, area_hyperbolic_sine, AreaHyperbolicSine, _ );
+X( atanh, area_hyperbolic_tangent, AreaHyperbolicTangent, _);
+X( erf, error_function, ErrorFunction, _ );
+X( erfc, complementary_error_function, ComplementaryErrorFunction, _);
+X( tgamma, gamma_function, GammaFunction, _ );
+X( lgamma, log_gamma, LogGamma, _ );
+X( exp, exponent, Exponent, _ );
+X( log, logarithm, Logarithm, _ );
+X( log10, logarithm10, Logarithm10, _ );
+X( sqrt, square_root, SquareRoot, _ );
+X( cbrt, cube_root, CubeRoot, _ );

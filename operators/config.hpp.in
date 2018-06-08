@@ -1,0 +1,19 @@
+#ifndef CONFIG_HPP_INCLUDED_1128909253505679596
+#define CONFIG_HPP_INCLUDED_1128909253505679596 1
+
+
+namespace Operators
+{
+  namespace Config
+  {
+    
+    constexpr int major = ${OPERATORS_MAJOR};
+    constexpr int minor = ${OPERATORS_MINOR};
+    constexpr int update = ${OPERATORS_UPDATE};
+    constexpr char version [] = "${OPERATORS_VERSION}";
+    constexpr char version_update [] = "${OPERATORS_VERSION_UPDATE}";
+    
+  } // end of namespace Config
+} // end of namespace Operators
+
+#endif // !defined CONFIG_HPP_INCLUDED_1128909253505679596
