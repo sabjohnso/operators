@@ -23,6 +23,7 @@ namespace Operators
 
     using std::decay_t;
 
+    using TypeUtility::Type;
     using TypeUtility::CRTP;
     
   } // end of namespace Core

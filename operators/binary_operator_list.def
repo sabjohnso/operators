@@ -1,0 +1,10 @@
+X( +, add, Addition, _ );
+X( -, subtract, Subtraction , _ );
+X( *, multiply, Multiplication, _ );
+X( /, divide, Division, _ );
+X( %, modulus, Modulous , _ );
+X( <<, left_shift, LeftShift, _ );
+X( >>, right_shift, RightShift , _ );
+X( &, bitwise_and, BitwiseAnd, _ );
+X( |, bitwise_or , BitwiseOr, _ );
+X( ^, bitwise_xor, BitwiseXor, _ );

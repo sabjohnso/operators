@@ -41,9 +41,10 @@ namespace Operators
 	return apply_binary( divide, static_cast<const T&>( *this ), forward<U>( y ));
       }
 
-
-      
     }; // end of class Arithmetic
+
+
+
     
 
   } // end of namespace Core

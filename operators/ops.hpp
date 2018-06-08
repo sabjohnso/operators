@@ -1,27 +1,53 @@
 #ifndef OPS_HPP_INCLUDED_1958426945611988765
 #define OPS_HPP_INCLUDED_1958426945611988765 1
 
+//
+// ... Operators header files
+//
+#include <operators/import.hpp>
+
+
+
+#include <operators/macros.hpp>
+
+
+
+
+
 namespace Operators
 {
   namespace Core
   {
 
-    constexpr auto add = []( auto&& x, auto&& y ){ return x+y; };
-    constexpr auto subtract = []( auto&& x, auto&& y ){ return x-y; };
-    constexpr auto multiply = []( auto&& x, auto&& y ){ return x*y; };
-    constexpr auto divide = []( auto&& x, auto&& y ){ return x/y; };
-    constexpr auto modulus = []( auto&& x, auto&& y ){ return x%y; };
+#define X( op, name, t, ... )						\
+    constexpr auto name = []( auto&& x, auto&& y ){ return x op y; };	\
+      using t = decay_t<decltype(name)>;				\
+    template< typename Stream >						\
+    Stream&								\
+    operator <<( Stream& os, t ){					\
+      os << OPERATORS_QUOTE( op );					\
+      return os;							\
+    }									\
+    template< typename Stream >						\
+    Stream&								\
+    operator <<( Stream& os, Type<t> ){					\
+      os << '[' << OPERATORS_QUOTE( op ) << ']';			\
+      return os;							\
+    }									\
+    OPERATORS_FORCE_SEMICOLON()
+#include "binary_operator_list.def"
+#undef X
+    
+
+    
+
     
     constexpr auto plus = []( auto&& x ){ return +x; };
     constexpr auto minus = []( auto&& x ){ return -x; };
     
     constexpr auto bitwise_not = []( auto&& x ){ return ~x; };
-    constexpr auto left_shift  = []( auto&& x, auto&& y ){ return x << y; };
-    constexpr auto right_shift = []( auto&& x, auto&& y ){ return x >> y; };
-    constexpr auto bitwise_and = []( auto&& x, auto&& y ){ return x & y; };
-    constexpr auto bitwise_or  = []( auto&& x, auto&& y ){ return x | y; };
-    constexpr auto bitwise_xor = []( auto&& x, auto&& y ){ return x ^ y; };
 
+    
     constexpr auto comma = []( auto&& x, auto&& y ){ return (x,y); };
 
     constexpr auto less_than = []( auto&& x, auto&& y ){ return x < y; };
@@ -56,5 +82,6 @@ namespace Operators
   } // end of namespace Core
 } // end of namespace Operators
 
+#include <operators/clear_macros.hpp>
 
 #endif // !defined OPS_HPP_INCLUDED_1958426945611988765
