@@ -1,0 +1,77 @@
+#+TITLE: Operators
+
+* Status
+
+  Unsuitable for use, production or otherwise.
+
+* Overview
+
+  `Operators` is a C++ library for working with operators and special
+  functions. There are facilities for deriving operators based on a
+  minimal subset of operators or minimal protocals and objects
+  providing proxies for operators and special functions.
+
+* Usage
+  
+  This is a header only library the API is defined by the symbols 
+  in the src_c++{Operators} namespce, all of which is accessible by
+  including the API header file:
+
+  #+BEGIN_SRC c++
+  #include <operators/operators.hpp>
+  #+END_SRC
+
+  None of the other header files are intended to be accessed directly
+  and only the symbol is the namespace defining the API are intended
+  to be supported.
+
+
+* Development
+
+** API
+
+   The symbols exposed in the src_c++{Operators} namespace define this
+   library's API
+
+** Importing symbols
+
+   Internally, this library uses symbols in the
+   src_c++{Operators::Core} namespace. External symbols used in the
+   core namespace should be imported through the operators/import.hpp
+   file, which acts as a centralized location for importing symbols.
+   The only other external symbols that are used in this library are
+   special functions that are used within function bodies, but not
+   braught into th core namespace.
+
+
+
+** Macros
+   
+   This library makes use of a macros in a number of places to easy
+   very repetative code.  However, this library undefines all of the
+   macros it defines with the exception of header guards and hence, it
+   does not pollute the global namespace.
+
+   In particular, this library uses [[https://en.wikipedia.org/wiki/X_Macro][X-Macros]] or a version of [[https://en.wikipedia.org/wiki/X_Macro][X-Macros]]
+   that is suitable for reducing the amount of repetative code that is
+   need. The primary difference here, is that the lists are defined in
+   header files that are included to expand the macro.
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

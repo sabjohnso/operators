@@ -1,0 +1,5 @@
+X( +, plus, Plus, _ );
+X( -, minus, Minus, _ );
+X( ~, bitwise_not, BitwiseNot, _ );
+X( !, logical_not, LogicalNot, _ );
+

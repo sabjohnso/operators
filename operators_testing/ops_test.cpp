@@ -49,7 +49,7 @@ struct Assignment_test
   void add_to_test(){
     auto x = 3;
     auto y = 4;
-    auto& z = add_to( x, y );
+    auto& z = add_assign( x, y );
     OPERATORS_TEST( accum, x == 7 );
     OPERATORS_TEST( accum, y == 4 );
     OPERATORS_TEST( accum, z == 7 );

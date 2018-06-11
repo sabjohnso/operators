@@ -22,7 +22,25 @@
 namespace Operators
 {
   namespace Core
-  {    
+  {
+
+    constexpr auto fused_multiply_add =
+      []( auto && x, auto && y, auto && z ){
+	using std::fma;
+	return fma( x, y, z );
+      };
+    using FusedMultiplyAdd =
+      decay_t<decltype( fused_multiply_add )>;
+
+    template< typename Stream >
+    Stream&
+    operator <<( Stream& os, FusedMultiplyAdd ){
+      os << "fma";
+      return os;
+    }
+
+    
+      
 
 #define X( fun, proxy, type, ... )				\
     constexpr auto proxy =					\
@@ -38,8 +56,9 @@ namespace Operators
 
     
 #include "unary_specfun_list.def"
-
 #undef X
+
+    
 
 #define X( fun, proxy, type, ... )		\
     constexpr auto proxy =			\
@@ -65,7 +84,8 @@ namespace Operators
     template< typename T >
     class Specfun : public CRTP<Specfun,T>
     {
-      
+
+
 #define X( fun, proxy, ... )						\
       friend constexpr auto						\
       fun( const Specfun& x ){						\
@@ -85,8 +105,22 @@ namespace Operators
       }						\
       OPERATORS_FORCE_SEMICOLON()
 #include "binary_specfun_list.def"
+#undef X
+
+      template< typename U, typename V >
+      friend constexpr auto
+      fma( const Specfun& x, U&& y, V&& z ){
+	return apply_ternary( fused_multiply_add, x, forward<U>( y ), forward<V>( z ));
+      }
+     
+		
       
     }; // end of class Specfun
+
+
+
+
+    
      
   } // end of namespace Core
 } // end of namespace Operators

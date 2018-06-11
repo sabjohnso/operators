@@ -27,3 +27,5 @@ X( log, logarithm, Logarithm, _ );
 X( log10, logarithm10, Logarithm10, _ );
 X( sqrt, square_root, SquareRoot, _ );
 X( cbrt, cube_root, CubeRoot, _ );
+X( floor, floor_function, Floor, _ );
+X( ceil, ceil_function, Ceil, _ );

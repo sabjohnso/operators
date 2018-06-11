@@ -44,7 +44,6 @@ public:
  */
 struct Arithmetic_test
 {
-
   Arithmetic_test() : accum( 0 ) {
     OPERATORS_STATIC_TEST( Value( 3 ) + Value( 4 ) == Value( 7 ));
   }

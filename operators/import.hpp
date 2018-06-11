@@ -18,11 +18,17 @@ namespace Operators
 {
   namespace Core
   {
-    
+
+    using std::move;
     using std::forward;
 
     using std::decay_t;
+    using std::enable_if;
+    using std::true_type;
+    using std::is_convertible;
+    
 
+    using TypeUtility::type;
     using TypeUtility::Type;
     using TypeUtility::CRTP;
     
