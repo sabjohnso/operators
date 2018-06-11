@@ -40,9 +40,8 @@ namespace Operators
 #undef X
 
       //
-      // ... Binary special functions 
+      // ... Binary special functions
       //
-
 
 #define X( fun, proxy, ... )						\
       friend constexpr auto						\
@@ -66,7 +65,8 @@ namespace Operators
       }									\
 									\
       template< typename U,						\
-		typename Test = typename enable_if<! is_convertible<U,Arithmetic<T>>::value >::type > \
+		typename Test =						\
+		typename enable_if<! is_convertible<U,Arithmetic<T>>::value >::type > \
       friend constexpr auto						\
       fun( const Specfunable& x, U&& y ){				\
 	return apply_binary( proxy, x, forward<U>( y ));		\
@@ -96,11 +96,19 @@ namespace Operators
 	return apply_binary( proxy, forward<U>( x ), move( y ));	\
       }									\
       OPERATORS_FORCE_SEMICOLON()
-      
 #include "binary_specfun_list.def"
 #undef X
 
 
+
+
+
+	
+
+
+	
+	
+	
 
     }; // end of class Specfunable
     
