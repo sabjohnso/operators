@@ -24,12 +24,16 @@ namespace Operators
     class Specfunable : public CRTP<Specfunable,T>
     {
       //
-      // ... Unary special functions as friends
+      // ... Unary special functions 
       //
 #define X( fun, proxy, ... )			\
       friend constexpr auto			\
       fun( const Specfunable& x ){		\
 	return apply_unary( proxy, x );		\
+      }						\
+      friend constexpr auto			\
+      fun( Specfunable&& x ){			\
+	return apply_unary( proxy, move( x ));	\
       }						\
       OPERATORS_FORCE_SEMICOLON()
 #include "unary_specfun_list.def"
@@ -97,27 +101,6 @@ namespace Operators
 #undef X
 
 
-// Dispatched with the second argument
-#define X( fun, proxy, ... )			\
-      template< typename U >			\
-      friend constexpr auto			\
-      fun( const U& x, const Specfunable& y ){	\
-	return apply_binary( proxy, x, y );	\
-      }						\
-      OPERATORS_FORCE_SEMICOLON()
-#include "binary_specfun_list.def"
-#undef X
-
-// Dispatched with both arguments to remove
-// ambiguity avover the previous overloads
-#define X( fun, proxy, ... )					\
-      friend constexpr auto					\
-      fun( const Specfunable& x, const Specfunable& y ){	\
-	return apply_binary( proxy, x, y );			\
-      }								\
-      OPERATORS_FORCE_SEMICOLON()
-#include "binary_specfun_list.def"
-#undef X
 
     }; // end of class Specfunable
     
