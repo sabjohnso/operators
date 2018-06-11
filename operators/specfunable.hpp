@@ -36,33 +36,80 @@ namespace Operators
 #undef X
 
       //
-      // ... Binary special functions as friends
+      // ... Binary special functions 
       //
-      // Dispatched with the first argument
-#define X( fun, proxy, ... )					\
-      template< typename U >					\
-      friend constexpr auto					\
-      fun( const Specfunable& x, const U& y ){			\
-	return apply_binary( proxy, x, y );			\
-      }								\
+
+
+#define X( fun, proxy, ... )						\
+      friend constexpr auto						\
+      fun( const Specfunable& x, const Specfunable& y ){		\
+	return apply_binary( proxy, x, y );				\
+      }									\
+									\
+      friend constexpr auto						\
+      fun( Specfunable&& x, const Specfunable& y ){			\
+	return apply_binary( proxy, move( x ), y );			\
+      }									\
+									\
+      friend constexpr auto						\
+      fun( const Specfunable& x, Specfunable&& y ){			\
+	return apply_binary( proxy, x, move( y ));			\
+      }									\
+									\
+      friend constexpr auto						\
+      fun( Specfunable&& x, Specfunable&& y ){				\
+	return apply_binary( proxy, move( x ), move( y ));		\
+      }									\
+									\
+      template< typename U,						\
+		typename Test = typename enable_if<! is_convertible<U,Arithmetic<T>>::value >::type > \
+      friend constexpr auto						\
+      fun( const Specfunable& x, U&& y ){				\
+	return apply_binary( proxy, x, forward<U>( y ));		\
+      }									\
+									\
+      template< typename U,						\
+		typename Test =						\
+		typename enable_if<! is_convertible<U,Arithmetic<T>>::value >::type > \
+      friend constexpr auto						\
+      fun( Specfunable&& x, U&& y ){					\
+	return apply_binary( proxy, move( x ), forward<U>( y ));	\
+      }									\
+									\
+      template< typename U,						\
+		typename Test =						\
+		typename enable_if<! is_convertible<U,Arithmetic<T>>::value >::type > \
+      friend constexpr auto						\
+      fun( U&& x, const Specfunable& y ){				\
+	return apply_binary( proxy, forward<U>( x ), y );		\
+      }									\
+									\
+      template< typename U,						\
+		typename Test =						\
+		typename enable_if<! is_convertible<U,Arithmetic<T>>::value >::type > \
+      friend constexpr auto						\
+      fun( U&& x, Specfunable&& y){					\
+	return apply_binary( proxy, forward<U>( x ), move( y ));	\
+      }									\
       OPERATORS_FORCE_SEMICOLON()
+      
 #include "binary_specfun_list.def"
 #undef X
 
 
-    // Dispatched with the second argument
-#define X( fun, proxy, ... )					\
-      template< typename U >					\
-      friend constexpr auto					\
-      fun( const U& x, const Specfunable& y ){			\
-	return apply_binary( proxy, x, y );			\
-      }								\
+// Dispatched with the second argument
+#define X( fun, proxy, ... )			\
+      template< typename U >			\
+      friend constexpr auto			\
+      fun( const U& x, const Specfunable& y ){	\
+	return apply_binary( proxy, x, y );	\
+      }						\
       OPERATORS_FORCE_SEMICOLON()
 #include "binary_specfun_list.def"
 #undef X
 
-    // Dispatched with both arguments to remove
-    // ambiguity avover the previous overloads
+// Dispatched with both arguments to remove
+// ambiguity avover the previous overloads
 #define X( fun, proxy, ... )					\
       friend constexpr auto					\
       fun( const Specfunable& x, const Specfunable& y ){	\
