@@ -2,28 +2,87 @@
 # ... Build script for operators
 #
 
-cmake_minimum_required( VERSION 3.1 )
+cmake_minimum_required( VERSION 3.8 )
 
-project( OPERATORS )
+project( OPERATORS VERSION 0.1.0 LANGUAGES CXX )
 
-set( OPERATORS_MAJOR  0 )
-set( OPERATORS_MINOR  1 )
-set( OPERATORS_UPDATE 0 )
-set( OPERATORS_VERSION operators-${OPERATORS_MAJOR}.${OPERATORS_MINOR} )
+include( GNUInstallDirs )
+
+#
+# ... Version information
+#
+set( OPERATORS_MAJOR  ${PROJECT_VERSION_MAJOR} )
+set( OPERATORS_MINOR  ${PROJECT_VERSION_MINOR} )
+set( OPERATORS_UPDATE ${PROJECT_VERSION_PATCH} )
+
+set( OPERATORS_SUFFIX -${OPERATORS_MAJOR}.${OPERATORS_MINOR} )
+
+set( OPERATORS_VERSION operators${OPERATORS_SUFFIX} )
 set( OPERATORS_VERSION_UPDATE ${OPERATORS_VERSION}.{OPERATORS_UPDATE} )
 
+#
+# ... Build options
+#
 option( BUILD_OPERATORS_TESTING  "Build the operators tests" ON )
 option( BUILD_OPERATORS_DOCUMENTATION "Build the operators documenation" ON )
+option( OPERATORS_INSTALL_VERSIONED "Make a version specific installation" ON )
 
-include_directories( 
-  ${OPERATORS_SOURCE_DIR}
-  ${OPERATORS_BINARY_DIR} )
 
-if( NOT OPERATORS_INSTALL_INCLUDE_DIR )
-  set( OPERATORS_INSTALL_INCLUDE_DIR include/operators
-    CACHE PATH "Path for installation of header files" )
-endif( NOT OPERATORS_INSTALL_INCLUDE_DIR )
+#
+# ... Dependencies
+#
+find_package( type_utility REQUIRED )
 
+
+#
+# ... Installation path info
+#
+set( OPERATORS_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR}
+  CACHE PATH "Path for installation of header files" )
+
+set( OPERATORS_INSTALL_LIBRARY_DIR ${CMAKE_INSTALL_LIBDIR}/operators
+  CACHE PATH "Path for installation of library files" )
+
+
+if( OPERATORS_INSTALL_VERSIONED )
+  string( APPEND OPERATORS_INSTALL_INCLUDE_DIR /operator${OPERATORS_SUFFIX})
+  string( APPEND OPERATORS_INSTALL_LIBRARY_DIR ${OPERATORS_SUFFIX})
+endif()
+
+set( OPERATORS_INSTALL_CONFIGDIR ${OPERATORS_INSTALL_LIBRARY_DIR})
+
+
+#
+# ... Header library target
+#
+add_library( operators INTERFACE )
+target_link_libraries( operators INTERFACE type_utility )
+
+target_include_directories( operators INTERFACE $<INSTALL_INTERFACE:${OPERATORS_INSTALL_INCLUDE_DIR}> )
+target_include_directories( operators INTERFACE $<BUILD_INTERFACE:${OPERATORS_SOURCE_DIR}> )
+target_include_directories( operators INTERFACE $<BUILD_INTERFACE:${OPERATORS_BINARY_DIR}> )
+
+set( OPERATORS_TARGETS_NAME operators_targets )
+install( TARGETS operators EXPORT ${OPERATORS_TARGETS_NAME}
+  DESTINATION ${OPERATORS_INSTALL_LIBRARY_DIR})
+
+install( EXPORT ${OPERATORS_TARGETS_NAME}
+  DESTINATION ${OPERATORS_INSTALL_LIBRARY_DIR}
+  FILE ${OPERATORS_TARGETS}.cmake )
+
+set( OPERATORS_TARGETS_NAME operators_targets.cmake )
+
+configure_file( operators-config.cmake.in operators-config.cmake @ONLY)
+install( FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/operators-config.cmake
+  DESTINATION ${OPERATORS_INSTALL_CONFIGDIR})
+
+
+
+
+#
+# ... Walk the source tree
+#
 add_subdirectory( operators )
 
 #

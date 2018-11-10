@@ -14,7 +14,7 @@
 // ... Clear the header gaurd if it is define otherwise give an error
 //
 #ifndef MACROS_HPP_INCLUDED_58610792695753561
-#  error "The header gaurd for macros definitions is note defined"
+#  error "The header gaurd for macros definitions is not defined"
 #endif
 
 #undef MACROS_HPP_INCLUDED_58610792695753561

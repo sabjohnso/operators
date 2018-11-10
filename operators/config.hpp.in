@@ -10,8 +10,12 @@ namespace Operators
     constexpr int major = ${OPERATORS_MAJOR};
     constexpr int minor = ${OPERATORS_MINOR};
     constexpr int update = ${OPERATORS_UPDATE};
+
+    
     constexpr char version [] = "${OPERATORS_VERSION}";
     constexpr char version_update [] = "${OPERATORS_VERSION_UPDATE}";
+
+    
     
   } // end of namespace Config
 } // end of namespace Operators

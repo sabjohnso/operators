@@ -1,0 +1,2 @@
+
+include(${CMAKE_INSTALL_PREFIX}/${OPERATORS_INSTALL_LIBRARY_DIR}/operators.cmake )

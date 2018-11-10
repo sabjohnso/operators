@@ -1,12 +1,23 @@
+#
+# ... Set the compilers
+#
+ifndef CC
+ CC = gcc
+endif
+
+ifndef CXX
+ CXX=g++
+endif
 
 TOPLEVEL_BUILD_DIRECTORY = ./build
-CC=gcc-7.3
-CXX=g++-7.3
+
 
 MAKEFILE = $(BUILD_DIRECTORY)/Makefile
 
+
 CMAKE_FLAGS_COMMON = \
   -DCMAKE_CXX_STANDARD=17 \
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
   -DCMAKE_CXX_FLAGS="-Wall -Werror -pedantic" \
   -DCMAKE_CXX_FLAGS_RELWITHDEBINFO=-O3 -g
 
@@ -42,6 +53,7 @@ install: release
 #
 # ... Release with debug information
 #
+
 BUILD_DIRECTORY_RELWITHDEBINFO = $(TOPLEVEL_BUILD_DIRECTORY)/RelWithDebInfo
 CMAKE_CACHE_RELWITHDEBINFO = $(BUILD_DIRECTORY_RELWITHDEBINFO)/CMakeCache.txt
 CMAKE_FLAGS_RELWITHDEBINFO = $(CMAKE_FLAGS_COMMON) -DCMAKE_BUILD_TYPE=RelWithDebInfo
@@ -79,8 +91,12 @@ $(BUILD_DIRECTORY_DEBUG):
 
 
 
+
+
+
+
 #
-# ... Clean
+# ... Cleaning
 #
 
 .PHONY: clean_release
@@ -98,3 +114,4 @@ clean_debug: $(BUILD_DIRECTORY_DEBUG) $(CMAKE_CHACHE_DEBUG)
 .PHONY: distclean
 distclean:
 	rm -rf $(TOPLEVEL_BUILD_DIRECTORY)
+
