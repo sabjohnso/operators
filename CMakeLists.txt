@@ -56,25 +56,27 @@ set( OPERATORS_INSTALL_CONFIGDIR ${OPERATORS_INSTALL_LIBRARY_DIR})
 # ... Header library target
 #
 add_library( operators INTERFACE )
-target_link_libraries( operators INTERFACE type_utility )
+target_link_libraries( operators INTERFACE type_utility::type_utility )
 
 target_include_directories( operators INTERFACE $<INSTALL_INTERFACE:${OPERATORS_INSTALL_INCLUDE_DIR}> )
 target_include_directories( operators INTERFACE $<BUILD_INTERFACE:${OPERATORS_SOURCE_DIR}> )
 target_include_directories( operators INTERFACE $<BUILD_INTERFACE:${OPERATORS_BINARY_DIR}> )
 
-set( OPERATORS_TARGETS_NAME operators_targets )
-install( TARGETS operators EXPORT ${OPERATORS_TARGETS_NAME}
+
+install(
+  TARGETS operators
+  EXPORT operators_targets
   DESTINATION ${OPERATORS_INSTALL_LIBRARY_DIR})
 
-install( EXPORT ${OPERATORS_TARGETS_NAME}
-  DESTINATION ${OPERATORS_INSTALL_LIBRARY_DIR}
-  FILE ${OPERATORS_TARGETS}.cmake )
-
-set( OPERATORS_TARGETS_NAME operators_targets.cmake )
+install(
+  EXPORT operators_targets
+  NAMESPACE operators::
+  FILE operators-targets.cmake
+  DESTINATION ${OPERATORS_INSTALL_LIBRARY_DIR} )
 
 configure_file( operators-config.cmake.in operators-config.cmake @ONLY)
-install( FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/operators-config.cmake
+install(
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/operators-config.cmake
   DESTINATION ${OPERATORS_INSTALL_CONFIGDIR})
 
 

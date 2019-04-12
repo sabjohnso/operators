@@ -174,6 +174,7 @@ namespace Operators
   //
   // ... Unary special function proxies
   //
+  using Core::Absolute_value;
   using Core::Cosine;
   using Core::Sine;
   using Core::Tangent;
@@ -197,6 +198,9 @@ namespace Operators
   using Core::CubeRoot;
   using Core::Floor;
   using Core::Ceil;
+
+  /** A proxy for the `abs` special function */
+  using Core::absolute_value;
   
   /** A proxy for the `cos` special function */
   using Core::cosine;
