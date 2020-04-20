@@ -29,3 +29,13 @@ Asm/
 *.DLL
 *.exe
 *.EXE
+
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+DartConfiguration.tcl
+Makefile
+operators-config.cmake.in

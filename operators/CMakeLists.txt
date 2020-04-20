@@ -21,8 +21,3 @@ install( FILES
   unary_specfun_list.def
   DESTINATION ${OPERATORS_INSTALL_INCLUDE_DIR}/operators)
 
-
-configure_file( operators-config.cmake.in operators-config.cmake)
-install( FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/operators-config.cmake
-  DESTINATION ${OPERATORS_INSTALL_LIBRARY_DIR} )
