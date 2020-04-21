@@ -39,19 +39,16 @@ namespace Operators
       return os;
     }
 
-    
-      
-
 #define X( fun, proxy, type, ... )				\
-    constexpr auto proxy =					\
-      []( auto&& x ){ using std::fun; return fun( x ); };	\
-    using type = decay_t<decltype(proxy)>;			\
-    template< typename Stream >					\
-    Stream&							\
-    operator <<( Stream& os, type ){				\
-      os << OPERATORS_QUOTE( fun );				\
-      return os;						\
-    }								\
+    constexpr auto proxy =                                              \
+      []( auto&& x ){ using std::fun; return fun(forward<decltype(x)>(x)); }; \
+    using type = decay_t<decltype(proxy)>;                              \
+    template< typename Stream >                                         \
+    Stream&                                                             \
+    operator <<( Stream& os, type ){                                    \
+      os << OPERATORS_QUOTE( fun );                                     \
+      return os;                                                        \
+    }                                                                   \
     OPERATORS_FORCE_SEMICOLON()
 
     
@@ -84,6 +81,7 @@ namespace Operators
     template< typename T >
     class Specfun : public CRTP<Specfun,T>
     {
+
 
 
 #define X( fun, proxy, ... )						\

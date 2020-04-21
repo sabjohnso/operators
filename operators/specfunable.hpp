@@ -26,6 +26,7 @@ namespace Operators
       //
       // ... Unary special functions 
       //
+      
 #define X( fun, proxy, ... )			\
       friend constexpr auto			\
       fun( const Specfunable& x ){		\

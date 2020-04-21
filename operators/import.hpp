@@ -4,6 +4,7 @@
 //
 // ... Standard header files
 //
+#include <cmath>
 #include <utility>
 #include <type_traits>
 
@@ -12,7 +13,7 @@
 // ... Type Utility header files
 //
 #include <type_utility/type_utility.hpp>
-
+#include <function_utility/function_utility.hpp>
 
 namespace Operators
 {
@@ -31,6 +32,8 @@ namespace Operators
     using TypeUtility::type;
     using TypeUtility::Type;
     using TypeUtility::CRTP;
+
+    using FunctionUtility::Static_callable;
     
   } // end of namespace Core
 } // end of namespace Operators

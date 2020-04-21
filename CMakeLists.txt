@@ -34,6 +34,7 @@ set(operators_INSTALL_CONFDIR ${operators_INSTALL_LIBDIR}/cmake/operators-${PROJ
 #
 
 find_package(type_utility REQUIRED)
+find_package(function_utility REQUIRED)
 
 #
 # ... Header library target

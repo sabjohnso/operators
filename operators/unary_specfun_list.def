@@ -7,7 +7,7 @@
  * for each special function.
  */
 X( abs, absolute_value, Absolute_value, _);
-X( cos, cosine, Cosine, _ );
+X( cos, cosine, Cosine, _);
 X( sin, sine, Sine, _ );
 X( tan, tangent, Tangent, _ );
 X( acos, arccosine, ArcCosine, _ );
