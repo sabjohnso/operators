@@ -19,12 +19,12 @@ struct Assignment_test
   Assignment_test() : accum( 0 ) {
     assign_test();
   }
-  
+
   void
   assign_test(){
     auto x = 3;
     auto y = 4;
-    auto z =  assign( x, y );
+    auto z =  assign( x, y );t
     OPERATORS_TEST( accum, x == 4);
     OPERATORS_TEST( accum, y == 4);
     OPERATORS_TEST( accum, z == 4);
@@ -45,7 +45,7 @@ struct Assignment_test
     OPERATORS_TEST( accum, y == 2 );
     OPERATORS_TEST( accum, z == 2 );
   }
-  
+
   void add_to_test(){
     auto x = 3;
     auto y = 4;
@@ -59,7 +59,7 @@ struct Assignment_test
   void divide_by_test(){}
   void modulo_by_test(){}
 
-  
+
   operator int() const { return accum; }
   int accum;
 }; // end of struct Assignment_test

@@ -19,5 +19,5 @@ install( FILES
   specfunable.hpp
   unary_operator_list.def
   unary_specfun_list.def
-  DESTINATION ${OPERATORS_INSTALL_INCLUDE_DIR}/operators)
+  DESTINATION ${operators_INSTALL_INCLUDEDIR}/operators)
 

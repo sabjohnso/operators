@@ -18,19 +18,22 @@ namespace Operators
   {
 
 #define X( op, name, t, ... )						\
-    constexpr auto name = []( auto&& x, auto&& y ){ return x op y; };	\
-    using t = decay_t<decltype(name)>;					\
-									\
-    template< typename Stream >						\
-    Stream&								\
-    operator <<( Stream& os, t ){					\
+    constexpr struct t : Static_callable<t>{                            \
+      template<typename T, typename U>                                  \
+      static constexpr auto                                             \
+      call(T&& x, U&& y){                                               \
+        return forward<T>(x) op forward<U>(y);                          \
+      }                                                                 \
+    }name{};                                                            \
+                                                                        \
+    ostream&								\
+    operator <<( ostream& os, t const& ){                               \
       os << OPERATORS_QUOTE( op );					\
       return os;							\
     }									\
-									\
-    template< typename Stream >						\
-    Stream&								\
-    operator <<( Stream& os, Type<t> ){					\
+                                                                        \
+    ostream&								\
+    operator <<( ostream& os, Type<t> ){                                \
       os << "Operators::Core::" << OPERATORS_QUOTE( t );		\
       return os;							\
     }									\
@@ -40,12 +43,18 @@ namespace Operators
 
 
 
-    
+
 #define X( op, name, t, ... )						\
-    constexpr auto name =						\
-       []( auto&& x, auto&& y ) -> decltype( x op y ){                  \
-		return x op y; };	         			\
-    using t = decay_t<decltype(name)>;					\
+    constexpr struct t                                                  \
+    {                                                                   \
+      template<typename T, typename U>                                  \
+      T&                                                                \
+      operator()(T& x, U&& y) const                                     \
+      {                                                                 \
+        return x op forward<U>(y);                                      \
+      }                                                                 \
+    } name{};                                                           \
+                                                                        \
     template< typename Stream >						\
     Stream&								\
     operator <<( Stream& os, t ){					\
@@ -63,24 +72,65 @@ namespace Operators
 #include "compound_assignment_operator_list.def"
 #undef X
 
-    
-    constexpr auto comma = []( auto&& x, auto&& y ){ return (x,y); };
-    
+    constexpr
+    struct Comma :  Static_callable<Comma>
+    {
+      template<typename T, typename U>
+      static constexpr auto
+      call(T&& x, U&& y){
+        return (forward<T>(x), forward<U>(y));
+      }
+    } comma{};
 
+    template<typename Stream>
+    Stream&
+    operator<<(Stream& os, Comma const&){
+      os << ",";
+      return os;
+    }
+
+    template<typename Stream>
+    Stream&
+    operator<<(Stream& os, Type<Comma> const&){
+      os << "Operators::Core::Comma";
+      return os;
+    }
+
+    ostream&
+    operator<<(ostream& os, Comma const&){
+      os << ",";
+      return os;
+    }
+
+    ostream&
+    operator<<(ostream& os, Type<Comma> const&){
+      os << "Operators::Core::Comma";
+      return os;
+    }
 
 #define X( op, name, t, ... )						\
-    constexpr auto name = []( auto&& x ){ return op x ; };		\
-    using t = decay_t<decltype(name)>;					\
-    template< typename Stream >						\
+    constexpr                                                           \
+    struct t : Static_callable<t>                                       \
+    {                                                                   \
+      template<typename U>                                              \
+      constexpr auto                                                    \
+      call(U&& x)                                                       \
+      {                                                                 \
+        return op forward<U>(x);                                        \
+      }                                                                 \
+    } name{};                                                           \
+                                                                        \
+    template<typename Stream>                                           \
     Stream&								\
     operator <<( Stream& os, t ){					\
       os << OPERATORS_QUOTE( op );					\
       return os;							\
-    }									\
-    template< typename Stream >						\
+    }                                                                   \
+                                                                        \
+    template< typename Stream >                                         \
     Stream&								\
-    operator <<( Stream& os, Type<t> ){					\
-      os << "Operators::Core::" << OPERATORS_QUOTE( t );		\
+    operator <<( Stream& os, Type<t> ){                                 \
+      os << "Operators::Core::" << OPERATORS_QUOTE( t );                \
       return os;							\
     }									\
     OPERATORS_FORCE_SEMICOLON()
@@ -88,7 +138,7 @@ namespace Operators
 #undef X
 
 
-    
+
 
     constexpr auto increment = []( auto&& x ) -> decltype( ++x ){ return ++x; };
     using Increment = decay_t<decltype(increment)>;
@@ -125,11 +175,11 @@ namespace Operators
     }
 
 
-    
 
 
-    
-    constexpr auto post_increment = []( auto&& x ){ return x++; };    
+
+
+    constexpr auto post_increment = []( auto&& x ){ return x++; };
     using PostIncrement = decay_t<decltype(post_increment)>;
 
     template< typename Stream >
@@ -146,10 +196,10 @@ namespace Operators
       return os;
     }
 
-     
 
 
-    
+
+
     constexpr auto post_decrement = []( auto&& x ){ return x--; };
     using PostDecrement = decay_t<decltype(post_decrement)>;
 
@@ -167,7 +217,7 @@ namespace Operators
       return os;
     }
 
-    
+
 
 
     constexpr auto dereference = []( auto&& x ) -> decltype( *x ){ return *x; };
@@ -175,18 +225,20 @@ namespace Operators
     template< typename Stream >
     Stream&
     operator<<( Stream& os, Dereference ){
-      return "*<>";
+      os << "*<>";
+      return os;
     }
 
     template< typename Stream >
     Stream&
     operator <<( Stream& os, Type<Dereference> ){
-      return "Operators::Core::Dereference";
+      os <<  "Operators::Core::Dereference";
+      return os;
     }
 
 
     constexpr auto address = []( auto&& x ){ return &x; };
-    
+
 
     using Address = decay_t<decltype(address)>;
 
@@ -203,9 +255,9 @@ namespace Operators
     operator <<( Stream& os, Type<Address> ){
       os << "Operators::Core::Address";
     }
-    
 
-    
+
+
 
   } // end of namespace Core
 } // end of namespace Operators

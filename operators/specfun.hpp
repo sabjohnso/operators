@@ -14,7 +14,7 @@
 
 
 #define OPERATORS_FORCE_SEMICOLON() static_assert(true)
-    
+
 #define OPERATORS_QUOTE_AUX( ... ) #__VA_ARGS__
 #define OPERATORS_QUOTE( ... ) OPERATORS_QUOTE_AUX( __VA_ARGS__ )
 
@@ -51,17 +51,17 @@ namespace Operators
     }                                                                   \
     OPERATORS_FORCE_SEMICOLON()
 
-    
+
 #include "unary_specfun_list.def"
 #undef X
 
-    
+
 
 #define X( fun, proxy, type, ... )		\
     constexpr auto proxy =			\
 	    []( auto&& x, auto&& y ){		\
 	      using std::fun;			\
-	      return fun( x  ); };		\
+	      return fun( x, y  ); };		\
     using type = decay_t<decltype(proxy)>;	\
     template< typename Stream >			\
     Stream&					\
@@ -73,9 +73,9 @@ namespace Operators
 
 #include "binary_specfun_list.def"
 #undef X
-    
-    
-    /** 
+
+
+    /**
      * @brief Derive secial functions
      */
     template< typename T >
@@ -94,13 +94,13 @@ namespace Operators
 #undef X
 
 
-      
-#define X( fun, proxy, ... )			\
-      template< typename U >			\
-      friend constexpr auto			\
-      fun( const Specfun& x, U&& y ){		\
-	return apply_binary( proxy, x );	\
-      }						\
+
+#define X( fun, proxy, ... )                            \
+      template< typename U >                            \
+      friend constexpr auto                             \
+      fun( const Specfun& x, U&& y ){                   \
+	return apply_binary( proxy, x, y );             \
+      }                                                 \
       OPERATORS_FORCE_SEMICOLON()
 #include "binary_specfun_list.def"
 #undef X
@@ -110,16 +110,7 @@ namespace Operators
       fma( const Specfun& x, U&& y, V&& z ){
 	return apply_ternary( fused_multiply_add, x, forward<U>( y ), forward<V>( z ));
       }
-     
-		
-      
     }; // end of class Specfun
-
-
-
-
-    
-     
   } // end of namespace Core
 } // end of namespace Operators
 
