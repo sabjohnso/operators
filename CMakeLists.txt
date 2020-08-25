@@ -28,6 +28,8 @@ endif()
 set(operators_INSTALL_LIBDIR ${CMAKE_INSTALL_LIBDIR})
 set(operators_INSTALL_BINDIR ${CMAKE_INSTALL_BINDIR})
 set(operators_INSTALL_CONFDIR ${operators_INSTALL_LIBDIR}/cmake/operators-${PROJECT_VERSION})
+set(operators_INSTALL_DOCDIR ${operators_INSTALL_DOCDIR})
+set(operators_INSTALL_MANDIR ${operators_INSTALL_MANDIR})
 
 #
 # ... Dependencies
@@ -109,10 +111,10 @@ if(operators_BUILD_DOCUMENTATION)
     operators_documentation ALL
     DEPENDS ${operators_BINARY_DIR}/doxygen.log)
 
-  install(DIRECTORY ${operators_BINARY_DIR}/doc/html DESTINATION ${operators_INSTALL_DOC_DIR})
-  install(DIRECTORY ${operators_BINARY_DIR}/doc/man DESTINATION ${operators_INSTALL_MAN_DIR})
-  
+  install(DIRECTORY ${operators_BINARY_DIR}/doc/html DESTINATION ${operators_INSTALL_DOCDIR})
+  install(DIRECTORY ${operators_BINARY_DIR}/doc/man DESTINATION ${operators_INSTALL_MANDIR})
 endif()
+
 
 
 # end of build definition for operators

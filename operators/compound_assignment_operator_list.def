@@ -1,15 +1,14 @@
 /**
  * @brief A list of compound assignment operators
  */
-X( =, assign, Assign, _ );
-X( +=, add_assign, AddAssign, _ );
-X( -=, subtract_assign, SubtractionAssign , _ );
-X( *=, multiply_assign, MultiplyAssign, _ );
-X( /=, divide_assign, DivideAssign, _ );
-X( %=, modulo_assign, ModuloAssign , _ );
-X( <<=, left_shift_assign, LeftShiftAssign, _ );
-X( >>=, right_shift_assign, RightShiftAssign , _ );
-X( &=, bitwise_and_assign, BitwiseAndAssign, _ );
-X( |=, bitwise_or_assign , BitwiseOrAssign, _ );
-X( ^=, bitwise_xor_assign, BitwiseXorAssign, _ );
-
+X(=, assign, Assign, _);
+X(+=, add_assign, AddAssign, _);
+X(-=, subtract_assign, SubtractionAssign, _);
+X(*=, multiply_assign, MultiplyAssign, _);
+X(/=, divide_assign, DivideAssign, _);
+X(%=, modulo_assign, ModuloAssign, _);
+X(<<=, left_shift_assign, LeftShiftAssign, _);
+X(>>=, right_shift_assign, RightShiftAssign, _);
+X(&=, bitwise_and_assign, BitwiseAndAssign, _);
+X(|=, bitwise_or_assign, BitwiseOrAssign, _);
+X(^=, bitwise_xor_assign, BitwiseXorAssign, _);

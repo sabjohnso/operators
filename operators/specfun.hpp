@@ -10,13 +10,13 @@
 // ... Operators header files
 //
 #include <operators/import.hpp>
+#include <operators/macros.hpp>
 
 
 
-#define OPERATORS_FORCE_SEMICOLON() static_assert(true)
 
-#define OPERATORS_QUOTE_AUX( ... ) #__VA_ARGS__
-#define OPERATORS_QUOTE( ... ) OPERATORS_QUOTE_AUX( __VA_ARGS__ )
+
+
 
 
 namespace Operators
@@ -114,8 +114,6 @@ namespace Operators
   } // end of namespace Core
 } // end of namespace Operators
 
-#undef OPERATORS_QUOTE
-#undef OPERATORS_QUOTE_AUX
-#undef OPERATORS_FORCE_SEMICOLON
+
 
 #endif // !defined SPECFUN_HPP_INCLUDED_45684590574513840

@@ -5,36 +5,34 @@
 // ... Standard header files
 //
 #include <cmath>
-#include <utility>
-#include <type_traits>
 #include <iostream>
-
+#include <type_traits>
+#include <utility>
 
 //
 // ... Type Utility header files
 //
-#include <type_utility/type_utility.hpp>
 #include <function_utility/function_utility.hpp>
+#include <type_utility/type_utility.hpp>
 
 namespace Operators
 {
   namespace Core
   {
 
-    using std::move;
     using std::forward;
+    using std::move;
 
     using std::ostream;
 
     using std::decay_t;
     using std::enable_if;
-    using std::true_type;
     using std::is_convertible;
+    using std::true_type;
 
-
+    using TypeUtility::CRTP;
     using TypeUtility::type;
     using TypeUtility::Type;
-    using TypeUtility::CRTP;
 
     using FunctionUtility::Static_callable;
 

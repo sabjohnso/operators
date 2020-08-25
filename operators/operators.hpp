@@ -2,8 +2,8 @@
  * @file operators/operators.hpp
  *
  * @brief A header file providing the API for the operators libarary
- * 
- * @details 
+ *
+ * @details
  */
 #ifndef OPERATORS_HPP_INCLUDED_2011373981609832720
 #define OPERATORS_HPP_INCLUDED_2011373981609832720 1
@@ -11,42 +11,121 @@
 //
 // ... Operators header files
 //
-#include <operators/inequality.hpp>
-#include <operators/comparable.hpp>
-#include <operators/ops.hpp>
 #include <operators/arithmetic.hpp>
-#include <operators/specfun.hpp>
-#include <operators/specfunable.hpp>
+#include <operators/comparable.hpp>
 #include <operators/compound_assignable.hpp>
-
-
+#include <operators/inequality.hpp>
+#include <operators/ops.hpp>
+#include <operators/specfunable.hpp>
 
 namespace Operators
 {
 
   //
   // ... Operator Derivation
-  // 
-  using Core::Inequality;
-  using Core::Comparable;
-  using Core::Arithmetic;
+  //
+
+  /**
+   * @brief Derive the inequality operator from the equality operator.
+   */
+  template<typename T>
+  class InequalIty : public Core::Inequality<T>
+  {
+  public:
+    using Core::Inequality<T>::Inequality;
+  };
+
+  /**
+   * @brief Derive binary comparison operators
+   *
+   * @details This class is intended for derivation from the less-than
+   * operator, the remaining binary comparison operators.
+   */
+  template<typename T>
+  class Comparable : public Core::Comparable<T>
+  {
+  public:
+    using Core::Comparable<T>::Comparable;
+  };
+
+  /**
+   * @brief Derive binary arithmetic operators
+   *
+   * @details This class derives the arithmetic operators from
+   * `apply_unary` and `apply_binary` operators defined for the derived
+   * type.
+   */
+  template<typename T>
+  class Arithmetic : public Core::Arithmetic<T>
+  {
+  public:
+    using Core::Arithmetic<T>::Arithmetic;
+  };
+
+  /**
+   * @brief Derivation of special functions
+   *
+   * @details This CRTP base class provides derivation
+   * of the special functions to its subtypes through the
+   * overloads to the functions apply_unary, and apply_binary.
+   */
+  template<typename T>
+  class Specfunable : public Core::Specfunable<T>
+  {
+  public:
+    using Core::Specfunable<T>::Specfunable;
+  };
+
+  /**
+   * @brief Derivation of compound assignment operators
+   */
+  template<typename T>
+  class Compound_assignable : public Core::Compound_assignable<T>
+  {
+  public:
+    using Core::Compound_assignable<T>::Compound_assignable;
+  };
+
   using Core::Specfun;
-  using Core::Specfunable;
-  using Core::Compound_assignable;
-
-
   //
   // ... Operator proxies
   //
 
-  using Core::Addition;
-  using Core::Subtraction;
-  using Core::Multiplication;
-  using Core::Division;
+  /**
+   * @brief A class providing a proxy for the addition operator
+   */
+  class Addition : public Core::Addition
+  {};
 
-  using Core::Plus;
-  using Core::Minus;
+  /**
+   * @brief A class providing a proxy for the subtraction operator
+   */
+  class Subtraction : public Core::Subtraction
+  {};
 
+  /**
+   * @brief A class providing a proxy for the multiplication operator
+   */
+  class Multiplication : public Core::Multiplication
+  {};
+
+  /**
+   * @brief A class providing a proxy for the division operator
+   */
+  class Division : public Core::Division
+  {};
+
+  /**
+   * @brief A class providing a proxy for the unary plus operator
+   */
+  class Plus : public Core::Plus
+  {};
+
+  /**
+   * @brief A class providing a proxy for the unary minus operator
+   */
+  class Minus : public Core::Minus
+  {};
 
   /** A proxy for the binary `+` operator */
   using Core::add;
@@ -71,18 +150,18 @@ namespace Operators
 
   /** A proxy for the `~` operator */
   using Core::bitwise_not;
-  
+
   /** A proxy for the `<<` operator */
-  using Core::left_shift ;
+  using Core::left_shift;
 
   /** A proxy for the `>>` operator */
   using Core::right_shift;
-  
+
   /** A proxy for the `&` operator */
   using Core::bitwise_and;
 
   /** A proxy for the `|` operator */
-  using Core::bitwise_or ;
+  using Core::bitwise_or;
 
   /** A proxy for the `^` operator */
   using Core::bitwise_xor;
@@ -169,39 +248,37 @@ namespace Operators
   /** A proxy for the `&` prefix operator */
   using Core::address;
 
-
-
   //
   // ... Unary special function proxies
   //
   using Core::Absolute_value;
-  using Core::Cosine;
-  using Core::Sine;
-  using Core::Tangent;
   using Core::ArcCosine;
   using Core::ArcSine;
   using Core::ArcTangent;
-  using Core::HyperbolicCosine;
-  using Core::HyperbolicSine;
-  using Core::HyperbolicTangent;
   using Core::AreaHyperbolicCosine;
   using Core::AreaHyperbolicSine;
   using Core::AreaHyperbolicTangent;
-  using Core::ErrorFunction;
+  using Core::Ceil;
   using Core::ComplementaryErrorFunction;
-  using Core::GammaFunction;
-  using Core::LogGamma;
+  using Core::Cosine;
+  using Core::CubeRoot;
+  using Core::ErrorFunction;
   using Core::Exponent;
+  using Core::Floor;
+  using Core::GammaFunction;
+  using Core::HyperbolicCosine;
+  using Core::HyperbolicSine;
+  using Core::HyperbolicTangent;
   using Core::Logarithm;
   using Core::Logarithm10;
+  using Core::LogGamma;
+  using Core::Sine;
   using Core::SquareRoot;
-  using Core::CubeRoot;
-  using Core::Floor;
-  using Core::Ceil;
+  using Core::Tangent;
 
   /** A proxy for the `abs` special function */
   using Core::absolute_value;
-  
+
   /** A proxy for the `cos` special function */
   using Core::cosine;
 
@@ -270,20 +347,17 @@ namespace Operators
 
   /** A proxy for the `ceil` special function */
   using Core::ceil_function;
-  
 
-
-  
   //
   // ... Binary special functio proxies
   //
 
-  using Core::Power;
   using Core::ArcTangent2;
   using Core::Hypotenuse;
-  using Core::PositiveDifference;
-  using Core::Minimum;
   using Core::Maximum;
+  using Core::Minimum;
+  using Core::PositiveDifference;
+  using Core::Power;
 
   /** A proxy for the `pow` special function */
   using Core::power;
@@ -303,26 +377,13 @@ namespace Operators
   /** A proxy for the `fmax` special function */
   using Core::maximum;
 
-
-
   //
   // ... Ternary special functions
   //
 
-  using Core::FusedMultiplyAdd;
   using Core::fused_multiply_add;
+  using Core::FusedMultiplyAdd;
 
-
-
-
-
-
-
-  
-  
-
-  
-  
 } // end of namespace Operators
 
 #endif // !defined OPERATORS_HPP_INCLUDED_2011373981609832720

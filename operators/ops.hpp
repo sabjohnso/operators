@@ -262,6 +262,6 @@ namespace Operators
   } // end of namespace Core
 } // end of namespace Operators
 
-#include <operators/clear_macros.hpp>
+
 
 #endif // !defined OPS_HPP_INCLUDED_1958426945611988765

@@ -5,8 +5,7 @@
 // ... Operators header files
 //
 #include <operators/import.hpp>
-
-
+#include <operators/inequality.hpp>
 
 namespace Operators
 {
@@ -15,39 +14,42 @@ namespace Operators
 
     /**
      * @brief Derive binary comparison operators
-     * 
-     * @details This class is intended for derivation from the less-than operator, 
-     * the remaining binary comparison operators.
+     *
+     * @details This class is intended for derivation from the less-than
+     * operator, the remaining binary comparison operators.
      */
-    template< typename T >
+    template<typename T>
     class Comparable : public Inequality<T>
     {
-      template< typename U>
+      template<typename U>
       friend constexpr bool
-      operator >( const Comparable& x, const U& y ){
-	return y < x;
+      operator>(const Comparable& x, const U& y)
+      {
+        return y < x;
       }
 
-      template< typename U >
+      template<typename U>
       friend constexpr bool
-      operator >=( const Comparable& x,  const U& y ){
-	return !( x < y);
+      operator>=(const Comparable& x, const U& y)
+      {
+        return !(x < y);
       }
 
-      template< typename U >
+      template<typename U>
       friend constexpr bool
-      operator <=( const Comparable& x, const U& y ){
-	return !( y < x );
+      operator<=(const Comparable& x, const U& y)
+      {
+        return !(y < x);
       }
 
-      template< typename U >
+      template<typename U>
       friend constexpr bool
-      operator ==( const Comparable& x, const U& y ){
-	return !(( x < y) || (y < x));
+      operator==(const Comparable& x, const U& y)
+      {
+        return !((x < y) || (y < x));
       }
-      
     };
-    
+
   } // end of namespace Core
 } // end of namespace Operators
 

@@ -4,16 +4,17 @@
 //
 // ... Operators header files
 //
+#include <operators/import.hpp>
+#include <operators/macros.hpp>
 #include <operators/specfun.hpp>
 
 
-#include <operators/macros.hpp>
 namespace Operators
 {
   namespace Core
   {
 
-    /** 
+    /**
      * @brief Derivation of special functions
      *
      * @details This CRTP base class provides derivation
@@ -24,9 +25,9 @@ namespace Operators
     class Specfunable : public CRTP<Specfunable,T>
     {
       //
-      // ... Unary special functions 
+      // ... Unary special functions
       //
-      
+
 #define X( fun, proxy, ... )			\
       friend constexpr auto			\
       fun( const Specfunable& x ){		\
@@ -104,16 +105,16 @@ namespace Operators
 
 
 
-	
 
 
-	
-	
-	
+
+
+
+
 
     }; // end of class Specfunable
-    
-    
+
+
   } // end of namespace Coree
 } // end of namespace Operators
 

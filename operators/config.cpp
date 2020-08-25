@@ -1,7 +1,7 @@
 
 
 int
-main( int, char** )
+main(int, char**)
 {
   return 0;
 }
