@@ -24,7 +24,7 @@ struct Assignment_test
   assign_test(){
     auto x = 3;
     auto y = 4;
-    auto z =  assign( x, y );t
+    auto z =  assign( x, y );
     OPERATORS_TEST( accum, x == 4);
     OPERATORS_TEST( accum, y == 4);
     OPERATORS_TEST( accum, z == 4);
